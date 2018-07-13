@@ -13,3 +13,6 @@ external and internal factors and their effect on power con-
 sumption. Furthermore, the consumption for future months
 were predicted and an accuracy comparison was performed
 based on current data.
+![alt text](https://github.com/sushray/BDAA/blob/master/src/resources/images/prediction_accuracy.png)
+![alt text](https://github.com/sushray/BDAA/blob/master/src/resources/images/prediction.jpg)
+![alt text](https://github.com/sushray/BDAA/blob/master/src/resources/images/energy.jpg)
