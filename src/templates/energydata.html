@@ -1,0 +1,101 @@
+    <!DOCTYPE html>
+  <html>
+  <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+  <link rel="stylesheet" href="../resources/main.css">
+  <link rel="stylesheet" href="../resources/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.5/angular-nvd3.min.js"></script>
+  <meta charset="UTF-8">
+  </head> 
+
+  <body>
+  <div>
+  <!-- Header Section -->
+       <header>
+              <h1 style=" color: #ffffff; font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 300; line-height: 40px; margin: 0 24px; text-align: center; text-transform: uppercase;">Electricity Consumption Prediction</h1>
+              <h4 style="color: #cc9900; font-family: 'Trocchi', serif; font-size: 20px; font-weight: normal; line-height: 35px; margin: 0;text-align: center;">INDIANA - State Profile and Energy Estimates</h4>
+              </header>
+  </div>
+
+  <div ng-app="energyApp" ng-controller="EnergyController">
+  <!-- Navigation bar section - navigates other pages like Data,Visuals etc. -->
+
+        <ul class="nav nav-pills">
+          <li class="active"><a href="../index.html">Profile</a></li>
+          <li class="active"><a href="../templates/data.html">Weather Data</a></li>
+           <li class="active"><a href="../templates/energydata.html">Energy Data</a></li>
+          <li class="active"><a href="../templates/analysis.html">More Visuals</a></li>
+          <li class="active"><a href="../templates/prediction.html">Predictions</a></li>
+           <li class="active"><a href="../templates/gallery.html">Gallery</a></li>
+        </ul>
+
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+          <h3>Analysis - Energy Data</h3>
+           <p>Data in this section provides the information about the energy consumption in residential areas of Indiana throughout the year selected. The table  displays the energy consumption data on monthly basis. The next subsection provides a graphical view of electricity consumption for each month. </p>
+            <form class="navbar-form navbar-left" role="search">
+            <!-- Search year dropdown -->
+              <div class="form-group">
+                 <h4>Monthly energy consumption summary for the year : <select  class="form-control" ng-model="search" ng-options="x for x in years" ng-model-options="{ debounce: 800 }">
+                            </select></h4>
+              </div>
+                <p>{{weatherdata}}</p>
+            </form>
+
+          </div>
+   
+   <!-- Display Consumption data in tabular form -->
+        <div id="results" style="border: 2px solid white">
+              <table class="table table-striped table-hover ">
+               <thead>
+                   <h5 style="text-align: center"><b>Monthly  electricity  consumption summary  for  {{search}}</b>  </h5>
+              </thead>
+              <tbody>
+                  <tr class="success">
+                    <th>#</th>
+                    <th>Year</th>
+                    <th>Month</th>
+                    <th>State</th>
+                    <th>Consumption(kWh)</th>
+                  </tr>
+                   <tr ng-repeat="row in items">
+                    <td>{{ $index + 1 }}</td>
+                   <td>{{row.year}}</td>
+                    <td>{{row.month}}</td>
+                    <td>{{row.state}}</td>
+                    <td>{{row.consumption}}</td>
+                  </tr>
+          </tbody>
+          </table>
+       </div>
+       <!-- Plots bar chart from the above table data -->
+        <div style="background-color: #ffffcc; margin: 0 auto;width: 800px;">
+                  <div style="text-align: center; color: #800000">
+                  <h5><b>Monthly Consumption - {{search}}</b></h5>
+                  </div>
+                     <nvd3 options="energyoptions" data="energydata"></nvd3>
+          </div>  
+
+          <div style="text-align: center;">
+              <br/>   <br/>  <br/> 
+            <h5>See Also: <a style="color: #ffad33" href="cumulativedisplay.html">Yearly electricity consumption for the years 2012-2016</a></h5>
+          </div>
+
+      </div>	
+
+<!-- Footer section -->
+        <div class="footer">
+        <div class="footer-content">
+        <div><h6>Big Data Project 2016<br/>Vibhatha Abeykoon, Sushmita Ray<br/><a style="color: #ffad33" href="https://gitlab.com/cloudmesh_fall2016/project-002/tree/master">GitLab</a></h6>
+        </div>
+        </div>
+        </div> 
+
+  <script src="../controller/energy.js"></script>
+  </body>
+  </html>

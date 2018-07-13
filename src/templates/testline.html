@@ -1,0 +1,194 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+  <link rel="stylesheet" href="../resources/main.css">
+  <link rel="stylesheet" href="../resources/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.5/angular-nvd3.min.js"></script>
+
+  <meta charset="UTF-8">
+  </head> 
+
+  <body ng-app="predictApp" ng-controller="PredController">
+    <div>
+    <!-- Header Section -->
+        <header>
+              <h1 style=" color: #ffffff; font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 300; line-height: 40px; margin: 0 0 24px; text-align: center; text-transform: uppercase;">Electricity Consumption Prediction</h1>
+              <h4 style="color: #7c795d; font-family: 'Trocchi', serif; font-size: 20px; font-weight: normal; line-height: 20px; margin: 0;text-align: center;">INDIANA - State Profile and Energy Estimates</h4>
+              </header>
+    </div>
+    <!-- Navigation bar section - navigates other pages like Data,Visuals etc. -->
+        <ul class="nav nav-pills">
+          <li class="active"><a href="../index.html">Overview</a></li>
+          <li class="active"><a href="../templates/data.html">Weather Data</a></li>
+           <li class="active"><a href="../templates/energydata.html">Energy Data</a></li>
+          <li class="active"><a href="../templates/analysis.html">More Visuals</a></li>
+        </ul>
+
+          <div style="margin: 0 auto; width: 100%; max-width: 1000px;">
+             <h4>Comparison of Real and Predicted Values (2016)</h4>
+                          <script>
+              var data = [        
+                          [3650,  6348, 7862.51352495,   6945.39942919,  14509.03200852,  15580.87822259,  17942.06045549], 
+                          [3325,6321,8677,6321,12747,15554,18944] 
+                            ];
+
+
+                    var margin = {
+                      top: 40,
+                      right: 80,
+                      bottom: 30,
+                      left: 100
+                    },
+                    width = 650 - margin.left - margin.right,
+                    height = 400 - margin.top - margin.bottom;
+
+
+                  var x = d3.scale.linear()
+                      .domain([0,data[0].length])   //Computing x-domain from 1st array
+                      .range([50, width]);
+
+                  var y = d3.scale.linear()
+                      .domain([0,d3.max(data[0])])  //Computing y-domain from 1st array
+                      .range([height, 50]);
+
+
+                    var xAxis = d3.svg.axis()
+                      .scale(x)
+                      .orient("bottom");
+
+                    var yAxis = d3.svg.axis()
+                      .scale(y)
+                      .orient("left") ;
+
+                  var line = d3.svg.line()
+                      .x(function(d,i) { return x(i); })
+                      .y(function(d) { return y(d); });
+
+                  var tooltip = d3.select("body")
+                    .append("div")
+                    .style("position", "absolute")
+                    .style("z-index", "10")
+                    .style("visibility", "hidden");
+
+
+                  var svg = d3.select("body").append("svg")
+                      //.datum(data)
+                      .attr("width", width)
+                      .attr("height", height)
+                    //.append("g");
+
+                    svg.append("rect")
+                    .attr("width", "100%")
+                    .attr("height", "100%")
+                    .attr("fill", "#ffffcc");
+
+                    svg.append("text")
+                      .attr("x", 435)             
+                      .attr("y", 35)
+                      .attr("text-anchor", "middle")  
+                      .style("font-size", "10px") 
+                      .style("font-weight", "bold") 
+                      .style("fill", "#a939ff")  
+                      .text("Actual");
+
+                    svg.append("text")
+                      .attr("x", 440)             
+                      .attr("y", 57)
+                      .attr("text-anchor", "middle")  
+                      .style("font-size", "10px") 
+                      .style("font-weight", "bold") 
+                      .style("fill", "#008080")  
+                      .text("Prediction");
+
+                     svg.append("text")
+                      .attr("x", 200)             
+                      .attr("y", 300)
+                      .attr("text-anchor", "middle")  
+                      .style("font-size", "11px") 
+                      .style("font-weight", "bold") 
+                      .style("fill", "#000000")  
+                      .text("Months (January - July ) -------------->");
+
+
+                       svg.append("text")
+                       .attr("transform", "rotate(-90)")
+                        .attr("dx", -90)
+                        .attr("dy", "2em")
+                      .attr("text-anchor", "middle")  
+                      .style("font-size", "11px") 
+                      .style("font-weight", "bold") 
+                      .style("fill", "#000000")  
+                      .text("Consumption Units (kWh)");
+
+
+
+                  var lines = svg.selectAll( "g" )
+                    .data( data );  // The data here is two arrays
+
+
+                  // for each array, create a 'g' line container
+                  var aLineContainer = lines
+                    .enter().append("g");  
+
+                  aLineContainer.append("path")
+                      .attr("class", "line")
+                      .attr("d", line)
+                      .style("stroke", "green");
+
+
+
+                  // Access the nested data, which are values within the array here
+                  aLineContainer.selectAll(".dot")
+                    .data( function( d, i ) { return d; } )  // This is the nested data call
+                    .enter()
+                      .append("circle")
+                      .attr("class", "dot")
+                      .attr("cx", line.x())
+                      .attr("cy", line.y())
+                      .attr("r", 3)
+                      .style("fill", "red")
+                      .on("mouseover", function(){return tooltip.style("visibility", "visible");})
+                      .on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+                      .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+
+
+  
+                    </script>
+            </div>
+             <!-- Shows weather factors and their average data intabular format -->
+        <div id="results">
+        <table
+              <table class="table table-striped table-hover" style="width:50%">
+                  <tr class="success">
+                    <th>#</th>
+                    <th>Month</th>
+                    <th>Consumption</th>
+                  </tr>
+                   <tr ng-repeat="row in items">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{row.month}}</td>
+                    <td>{{row.consumption}}</td>
+                  </tr>
+          </table>
+       </div>
+               
+
+<!-- Footer section -->
+    <div class="footer">
+    <div class="footer-content">
+    <div>Big Data Project 2016</div>
+    </div>
+    </div>
+
+ 
+  </body>
+  <script type="text/javascript" src="../controller/prediction.js"></script>
+  </html>

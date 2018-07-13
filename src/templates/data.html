@@ -1,0 +1,145 @@
+    <!DOCTYPE html>
+  <html>
+  <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+  <link rel="stylesheet" href="../resources/main.css">
+  <link rel="stylesheet" href="../resources/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.5/angular-nvd3.min.js"></script>
+  <meta charset="UTF-8">
+  </head> 
+  <body>
+   <!-- Header Section -->
+      <div>
+           <header>
+              <h1 style=" color: #ffffff; font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 300; line-height: 40px; margin: 0 24px; text-align: center; text-transform: uppercase;">Electricity Consumption Prediction</h1>
+              <h4 style="color: #cc9900; font-family: 'Trocchi', serif; font-size: 20px; font-weight: normal; line-height: 35px; margin: 0;text-align: center;">INDIANA - State Profile and Energy Estimates</h4>
+              </header>
+      </div>
+
+<!-- Navigation bar section - navigates other pages like Data,Visuals etc. -->
+      	<div ng-app="myApp" ng-controller="WeatherController">
+        <div>
+        <ul class="nav nav-pills">
+            <li class="active"><a href="../index.html">Profile</a></li>
+            <li class="active"><a href="../templates/data.html">Weather Data</a></li>
+             <li class="active"><a href="../templates/energydata.html">Energy Data</a></li>
+            <li class="active"><a href="../templates/analysis.html">More Visuals</a></li>
+            <li class="active"><a href="../templates/prediction.html">Predictions</a></li>
+             <li class="active"><a href="../templates/gallery.html">Gallery</a></li>
+          </ul>
+
+          
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+           <h3>Analysis - Weather Data</h3>
+           <p>Data in this section provides the distributed information about the various atmospheric conditions like temperature, wind speed, humidity and precipitation throughout the year selected. The first subsection provides a graphical view of average values of these factors for each month. The table at the bottom displays the weather data in details i.e. on daily basis.</p>
+            <form class="navbar-form navbar-left" role="search">
+            <!-- Search year dropdown -->
+              <div>
+              <h4> Average weather data summary for the year: <select  class="form-control" ng-model="search" ng-options="x for x in years" ng-model-options="{ debounce: 800 }">
+                            </select></h4>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+
+
+      <!-- Plots bar charts from above table data  -->
+        <table border="5" bordercolor="red" align="center">
+            <tr>
+              <td style="border: 10px solid #3d4e5c ;">
+
+                   <h6><b>Temperature - {{search}}</b></h6>
+                  <div style="background-color: #ffffcc; width: 500px">
+                     <!-- Average temperature -->
+                     <nvd3 options="tempoptions" data="weatherdata"></nvd3> 
+                 </div>  
+              </td>
+               <td style="border: 10px solid #3d4e5c ;">
+                <h6><b>Humidity - {{search}}</b></h6>
+                      <!-- Relative Humidity -->
+                      <div style="background-color: #ffffcc; width: 500px">
+                      <nvd3 options="humoptions" data="weatherdata"></nvd3>
+                 </div>  
+                </td>
+            </tr>
+
+             <tr>
+              <td style="border: 10px solid #3d4e5c ;">
+               <h6><b>Wind Speed - {{search}}</b></h6>
+                   <!-- Wind speed -->
+                  <div style="background-color: #ffffcc; width: 500px">
+                     <nvd3 options="windoptions" data="weatherdata"></nvd3>
+                 </div>  
+              </td>
+               <td style="border: 10px solid #3d4e5c ;">
+                <h6><b>Precipitation - {{search}}</b></h6>
+                <!-- Precipitation -->
+                      <div style="background-color: #ffffcc; width: 500px">
+                      <nvd3 options="precipoptions" data="weatherdata"></nvd3>
+                 </div>  
+                </td>
+            </tr>
+          </table>
+
+             <!-- Shows weather factors and their average data intabular format -->
+          <div id="results" style="border: 2px solid white">
+              <table class="table table-striped table-hover ">
+              <thead>
+                   <h5 style="text-align: center"><b>Daily  weather  report  for  {{search}}</b>  </h5>
+              </thead>
+              <tbody>
+                  <tr class="success">
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Zip Code</th>
+                    <th>Max Temp(℉)</th>
+                    <th>Min Temp(℉)</th>
+                    <th>Avg Temp(℉)</th>
+                    <th>Max Wind Spd(km/h)</th>
+                    <th>Min Wind Spd(km/h)</th>
+                    <th>Avg Wind Spd(km/h)</th>
+                    <th>Avg Humidity(%)</th>
+                  </tr>
+                   <tr dir-paginate="row in details|orderBy:sortKey:reverse|filter:search|itemsPerPage:10">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{row.time}}</td>
+                    <td>{{row.data.postal_code}}</td>
+                    <td>{{row.data.tempMax}}</td>
+                    <td>{{row.data.tempMin}}</td>
+                    <td>{{row.data.tempAvg}}</td>
+                    <td>{{row.data.windSpdMax}}</td>
+                    <td>{{row.data.windSpdMin}}</td>
+                    <td>{{row.data.windSpdAvg}}</td>
+                    <td>{{row.data.relHumAvg}}</td>
+                  </tr>
+          </tbody>
+          </table>
+          <!-- Pagination code for the above table -->
+              <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+              </dir-pagination-controls>
+        </div>
+
+        </div>
+
+
+
+ <!-- Footer section -->
+        <div class="footer">
+        <div class="footer-content">
+        <div><h6>Big Data Project 2016<br/>Vibhatha Abeykoon, Sushmita Ray<br/><a style="color: #ffad33" href="https://gitlab.com/cloudmesh_fall2016/project-002/tree/master">GitLab</a></h6>
+        </div>
+        </div>
+        </div> 
+
+      <script src="../controller/weather.js"></script>
+      <script src="../controller/dirPagination.js"></script>
+  </body>
+  </html>

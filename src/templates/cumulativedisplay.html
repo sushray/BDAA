@@ -1,0 +1,54 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+  <link rel="stylesheet" href="../resources/main.css">
+  <link rel="stylesheet" href="../resources/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.5/angular-nvd3.min.js"></script>
+
+  <meta charset="UTF-8">
+  </head> 
+
+  <body ng-app="lineApp" ng-controller="MultiController">
+    <div>
+    <!-- Header Section -->
+         <header>
+              <h1 style=" color: #ffffff; font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 300; line-height: 40px; margin: 0 24px; text-align: center; text-transform: uppercase;">Electricity Consumption Prediction</h1>
+              <h4 style="color: #cc9900; font-family: 'Trocchi', serif; font-size: 20px; font-weight: normal; line-height: 35px; margin: 0;text-align: center;">INDIANA - State Profile and Energy Estimates</h4>
+              </header>
+    </div>
+    <!-- Navigation bar section - navigates other pages like Data,Visuals etc. -->
+        <ul class="nav nav-pills">
+          <li class="active"><a href="../index.html">Profile</a></li>
+          <li class="active"><a href="../templates/data.html">Weather Data</a></li>
+           <li class="active"><a href="../templates/energydata.html">Energy Data</a></li>
+          <li class="active"><a href="../templates/analysis.html">More Visuals</a></li>
+           <li class="active"><a href="../templates/prediction.html">Predictions</a></li>
+            <li class="active"><a href="../templates/gallery.html">Gallery</a></li>
+        </ul>
+
+          <div style="margin: 0 auto; width: 100%; max-width: 1000px;">
+          <h3>Electricity Consumption Overview</h3>
+            The multi-line graph below shows the variation in electricity consumption for the years 2012 till 2016 in Indiana. Last five years show common trend of gradual increase in energy consumption throughout the year.
+            </div>
+                  
+                      <map locations="locations"></map>
+
+
+<!-- Footer section -->
+      <div class="footer">
+        <div class="footer-content">
+        <div><h6>Big Data Project 2016<br/>Vibhatha Abeykoon, Sushmita Ray<br/><a style="color: #ffad33" href="https://gitlab.com/cloudmesh_fall2016/project-002/tree/master">GitLab</a></h6>
+        </div>
+        </div>
+        </div>   
+
+  <script src="../controller/multiline.js"></script>
+  </body>
+  </html>

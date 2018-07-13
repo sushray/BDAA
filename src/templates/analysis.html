@@ -1,0 +1,94 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+  <link rel="stylesheet" href="../resources/main.css">
+  <link rel="stylesheet" href="../resources/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.5/angular-nvd3.min.js"></script>
+
+  <meta charset="UTF-8">
+  </head> 
+
+  <body ng-app="plunker" ng-controller="MainCtrl">
+    <div>
+    <!-- Header Section -->
+   <header>
+              <h1 style=" color: #ffffff; font-family: 'Raleway',sans-serif; font-size: 40px; font-weight: 300; line-height: 40px; margin: 0 24px; text-align: center; text-transform: uppercase;">Electricity Consumption Prediction</h1>
+              <h4 style="color: #cc9900; font-family: 'Trocchi', serif; font-size: 20px; font-weight: normal; line-height: 35px; margin: 0;text-align: center;">INDIANA - State Profile and Energy Estimates</h4>
+              </header>
+    </div>
+    <!-- Navigation bar section - navigates other pages like Data,Visuals etc. -->
+      <ul class="nav nav-pills">
+        <li class="active"><a href="../index.html">Profile</a></li>
+        <li class="active"><a href="../templates/data.html">Weather Data</a></li>
+         <li class="active"><a href="../templates/energydata.html">Energy Data</a></li>
+        <li class="active"><a href="../templates/analysis.html">More Visuals</a></li>
+        <li class="active"><a href="../templates/prediction.html">Predictions</a></li>
+         <li class="active"><a href="../templates/gallery.html">Gallery</a></li>
+      </ul>
+       
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+          <h3>More Visuals</h3>
+           <p>Data in this section provides side-by-side view of how the various atmospheric conditions like temperature, wind speed, humidity and precipitation vary throughout the year selected. The change in electricity consumption can also be seen simultaneously as line graphs.</p>
+            <form class="navbar-form navbar-left" role="search">
+             <!-- Search year dropdown -->
+
+              <div class="form-group">
+                Select Year: <select  class="form-control" ng-model="search" ng-options="x for x in years" ng-model-options="{ debounce: 800 }">
+                            </select>
+              </div>
+
+            </form>
+
+          </div>
+          <div>
+          <!-- Plots line charts for windspeed,temp.,humidity and precipitation  -->
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The graph below shows the average temperature, wind speed, humidity and precipitation figures from 2012 to 2016 in Indiana.</p>
+            <table border="5" bordercolor="#3d4e5c" align="center">
+            <tr>
+              <td>
+                  <div style="background-color: #ffffcc; width: 250px">
+                    <nvd3 options="options" data="data"></nvd3> 
+                 </div>  
+              </td>
+               <td>
+                      <div style="background-color: #ffffcc; width: 250px">
+                       <nvd3 options="windoptions" data="winddata"></nvd3> 
+                 </div>  
+                </td>
+                 <td>
+                      <div style="background-color: #ffffcc; width: 250px">
+                       <nvd3 options="humoptions" data="humdata"></nvd3> 
+                 </div>  
+                </td>
+                 <td>
+                      <div style="background-color: #ffffcc; width: 250px">
+                       <nvd3 options="preoptions" data="predata"></nvd3> 
+                 </div>  
+                </td>
+            </tr>
+
+          </table>   
+          </div>
+          <br/>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The graph below shows the monthly energy consumption from 2012 to 2016 in Indiana.</p>
+          <div style="background-color: #ffffcc;margin: 0 auto; width: 100%; max-width: 1000px; border-color: #3d4e5c">
+                       <nvd3 options="energyOptions" data="energydata"></nvd3> 
+                 </div> 
+
+<!-- Footer section -->
+    <div class="footer">
+    <div class="footer-content">
+    <div>Big Data Project 2016</div>
+    </div>
+    </div>
+
+  <script src="../controller/population.js"></script>
+  </body>
+  </html>
